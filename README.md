@@ -9,7 +9,7 @@ From NPM:
 ## How to use
 * clone this repo
 * `npm install`
-* change *YOUR_KEY* in `main.js` with your Telegram bot token
+* change *YOUR_TOKEN* in `main.js` with your Telegram bot token
 * `node main.js`
 
 ## Contacts, info, ...
