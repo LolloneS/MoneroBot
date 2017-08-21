@@ -18,7 +18,7 @@ var KrakenClient = require('kraken-api');
 var kraken = new KrakenClient();
 
 // Telegram token you receive from @BotFather
-const token = '308637942:AAGZEofpggf06Rzqav5K5tfZu-TOEfZPosY';
+const token = 'YOUR_TOKEN';
 
 
 // Create a bot that uses 'polling' to fetch new updates
