@@ -20,7 +20,6 @@
   "author": "Lorenzo Soligo",
   "license": "ISC",
   "dependencies": {
-    "kraken-api": "^0.1.7",
     "node-telegram-bot-api": "0.27"
   }
 }
