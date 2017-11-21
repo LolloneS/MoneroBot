@@ -6,8 +6,7 @@ const STRING_RESPONSE_XMR = "<b>1 XMR = ";
 const STRING_RESPONSE_HELP =
          "Welcome to the ultimate Monero Bot.\n"
          + "Feel free to suggest me improvements and fixes @LolloneS. I'll try to get back to you as soon as I can.\n"
-         + "<b>I know this isn't perfect</b>, I'm just an enthusiast trying to learn something :)\n"
-         + "Wanna know how to use me? Just type /xmr :)";
+         + "<b>I know this isn't perfect</b>, I'm just an enthusiast trying to learn something :)\n";
 const STRING_ERROR = "I'm sorry, there was a problem with the APIs. Please try again later. If the problem persists, let me [@LolloneS] know."
 const token = 'token';         
 const bot = new TelegramBot(token, {polling: true});
