@@ -70,14 +70,24 @@ bot.onText(/\/btc/, async (msg, match) => {
 function sendRequest(fiat) {
   return new Promise(function (resolve, reject) {
     https.get(standardQuery + fiat.toUpperCase(), (res) => {
-      let data = '';
-      res.on('data', (change) => {
-        data += change;
-      });
+      let returned = '';
+      res.on('data', (change) => {
+        try {
+          returned = JSON.parse(change);
+        } catch (e) {
+          console.log("Error while parsing JSON!");
+          reject("Error while parsing JSON!");
+        }
+      });
       res.on('end', () => {
-        resolve(JSON.parse(data));
+        resolve(returned);
+      });
+      res.on('error', (err) => {
+        console.log("APIs returned this error message:\n", err);
+        reject(err);
       });
     }).on("error", (err) => {
+        console.log("APIs returned this error message:\n", err);
         reject(err);
     });
   });
