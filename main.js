@@ -10,7 +10,7 @@ const STRING_RESPONSE_HELP =
 const STRING_ERROR = "I'm sorry, there was a problem with the APIs. Please try again later. If the problem persists, let me [@LolloneS] know."
 const token = 'token';         
 const bot = new TelegramBot(token, {polling: true});
-
+const winston = require('winston')
 
 bot.onText(/\/start/, (msg, match) => {
   const chatId = msg.chat.id;
@@ -66,29 +66,38 @@ bot.onText(/\/btc/, async (msg, match) => {
   }
 })
 
+function logError(e, f) {
+  winston.log('error', `Error with the APIs`, {
+    "Error Returned": e,
+    "Function": f
+  }); 
+}
 
 function sendRequest(fiat) {
   return new Promise(function (resolve, reject) {
     https.get(standardQuery + fiat.toUpperCase(), (res) => {
       let returned = '';
       res.on('data', (change) => {
-        try {
-          returned = JSON.parse(change);
+        try { 
+          returned = change;         
+          tmp = JSON.parse(change);
+          resolve(tmp);
         } catch (e) {
-          console.log("Error while parsing JSON!");
-          reject("Error while parsing JSON!");
+          logError(e, "res.on('data')")          
+          reject("Error while parsing JSON in res.on('data')!");
         }
       });
       res.on('end', () => {
-        resolve(returned);
+        try {
+          resolve(JSON.parse(returned));
+        } catch (e) {
+          logError(e, "res.on('end')")          
+          reject("Error while parsing JSON in res.on('end')!");
+        }
       });
-      res.on('error', (err) => {
-        console.log("APIs returned this error message:\n", err);
-        reject(err);
-      });
-    }).on("error", (err) => {
-        console.log("APIs returned this error message:\n", err);
-        reject(err);
+    }).on("error", (e) => {
+      logError(e, "res.on('error')")          
+      reject("Error while parsing JSON in res.on('error')!");
     });
   });
 }
