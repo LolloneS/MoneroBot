@@ -3,16 +3,26 @@ Simple Telegram bot that lets you know CryptoCompare.com's XMR-EUR, XMR-USD and 
 
 ## Dependencies
 From NPM:
-  * **node-telegram-bot-api** by yagop
+* **node-telegram-bot-api** by yagop
+* **winston** by indexzero
 
 From Node's Standard Library:
-  * **https**
+* **https**
+
+From your usual package manager:
+* **screen**
+
 
 ## How to use
 * clone this repo
-* `npm install`
-* change *YOUR_TOKEN* in `main.js` with your Telegram bot token
-* `node main.js` [or `screen node main.js`]
+* `chmod +x config_and_run.sh`
+* `./config_and_run.sh YOUR_TELEGRAM_BOT_TOKEN`
+
+### More info
+* Logs in `MoneroBot/monerobot.log`
+* `screen -r bot` is your friend :)
+* [Luca Toma](https://github.com/tomaluca95) for saving my life a few times
+
 
 ## Contacts, info, ...
 Write me at slg.lnz96@icloud.com or @LolloneS (Telegram).
