@@ -21,7 +21,7 @@ From your usual package manager:
 ### More info
 * Logs in `MoneroBot/monerobot.log`
 * `screen -r bot` is your friend :)
-* [Luca Toma](https://github.com/tomaluca95) for saving my life a few times
+* Thanks [Luca Toma](https://github.com/tomaluca95) for saving my life a few times
 
 
 ## Contacts, info, ...
