@@ -11,31 +11,38 @@ const STRING_ERROR = "I'm sorry, there was a problem with the APIs. Please try a
 const cfg = require('./config.json');
 const token = cfg.token;
 const bot = new TelegramBot(token, {polling: true, filepath: false});
-const winston = require('winston')
+const winston = require('winston');
+const TELEGRAM = 0;
+const CRYPTOCOMPARE = 1;
+
+function sendAndCatch(chatId, message, source) {
+  bot.sendMessage(chatId, message, {parse_mode : "html"})
+     .catch((e) => source == TELEGRAM ? logTelegramError(e) : logCryptoCompareError(e));
+}
+
+function logCryptoCompareError(e, f) {
+  winston.log('error', `Error with CryptoCompare's APIs`, {
+    "Error Returned": e,
+    "Function": f
+  }); 
+}
+
+function logTelegramError(e) {
+  winston.log('error', `Error with Telegram's APIs`, {
+    "Error Code": e.code,
+    "Response Body": e.response.body
+  }); 
+}
 
 bot.onText(/\/start/, (msg, match) => {
   const chatId = msg.chat.id;
-  bot.sendMessage(chatId, STRING_RESPONSE_START, {parse_mode : "html"})
-     .catch((e) => {
-      winston.log('error', `Error with Telegram's APIs`, {
-        "Error Code": e.code,
-        "Response Body": e.response.body
-      });
-     });
+  sendAndCatch(chatId, STRING_RESPONSE_START, TELEGRAM);
 });
-
 
 bot.onText(/\/help/, (msg, match) => {
   const chatId = msg.chat.id;
-  bot.sendMessage(chatId, STRING_RESPONSE_HELP, {parse_mode : "html"})
-     .catch((e) => {
-        winston.log('error', `Error with Telegram's APIs`, {
-        "Error Code": e.code,
-        "Response Body": e.response.body
-    });
-   });
+  sendAndCatch(chatId, STRING_RESPONSE_HELP, TELEGRAM);
 });
-
 
 bot.onText(/\/eur/, async (msg, match) => {
   const chatId = msg.chat.id;
@@ -90,31 +97,13 @@ bot.onText(/\/btc/, async (msg, match) => {
   const chatId = msg.chat.id;
   try {
     const value = await sendRequest("BTC");
-    if (value !== undefined)
-      bot.sendMessage(chatId, STRING_RESPONSE_XMR + value.BTC + " BTC</b>", {parse_mode : "html"})
-      .catch((e) => logTelegramError(e));
-    else
-      bot.sendMessage(chatId, STRING_ERROR, {parse_mode : "html"})
-      .catch((e) => logTelegramError(e));
+    sendAndCatch(chatId, STRING_RESPONSE_XMR + value.BTC + " BTC</b>", TELEGRAM);
   } catch (e) {
-    bot.sendMessage(chatId, STRING_ERROR, {parse_mode : "html"})
-    .catch((e) => logTelegramError(e));
+    sendAndCatch(chatId, STRING_ERROR + "\n" + e, TELEGRAM)
   }
 })
 
-function logCryptoCompareError(e, f) {
-  winston.log('error', `Error with CryptoCompare's APIs`, {
-    "Error Returned": e,
-    "Function": f
-  }); 
-}
 
-function logTelegramError(e) {
-  winston.log('error', `Error with Telegram's APIs`, {
-    "Error Code": e.code,
-    "Response Body": e.response.body
-  }); 
-}
 
 function sendRequest(fiat) {
   return new Promise(function (resolve, reject) {
