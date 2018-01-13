@@ -48,49 +48,22 @@ bot.onText(/\/eur/, async (msg, match) => {
   const chatId = msg.chat.id;
   try {
     const value = await sendRequest("EUR");
-    if (value !== undefined)
-      bot.sendMessage(chatId, STRING_RESPONSE_XMR + value.EUR + " €</b>", {parse_mode : "html"})
-      .catch((e) => {
-        winston.log('error', `Error with Telegram's APIs`, {
-          "Error Code": e.code,
-          "Response Body": e.response.body
-        });
-       });
-    else
-      bot.sendMessage(chatId, STRING_ERROR, {parse_mode : "html"})
-      .catch((e) => {
-        winston.log('error', `Error with Telegram's APIs`, {
-          "Error Code": e.code,
-          "Response Body": e.response.body
-        });
-       });
+    sendAndCatch(chatId, STRING_RESPONSE_XMR + value.EUR + " €</b>", TELEGRAM);
   } catch (e) {
-    bot.sendMessage(chatId, STRING_ERROR, {parse_mode : "html"})
-    .catch((e) => {
-      winston.log('error', `Error with Telegram's APIs`, {
-        "Error Code": e.code,
-        "Response Body": e.response.body
-      });
-     });      
+    sendAndCatch(chatId, STRING_ERROR, TELEGRAM);
   }
-})
+});
 
 
 bot.onText(/\/usd/, async (msg, match) => {
   const chatId = msg.chat.id;
   try {
     const value = await sendRequest("USD");
-    if (value !== undefined)
-      bot.sendMessage(chatId, STRING_RESPONSE_XMR + value.USD + " $</b>", {parse_mode : "html"})
-      .catch((e) => logTelegramError(e));
-    else
-      bot.sendMessage(chatId, STRING_ERROR, {parse_mode : "html"})
-      .catch((e) => logTelegramError(e));
+    sendAndCatch(chatId, STRING_RESPONSE_XMR + value.EUR + " $</b>", TELEGRAM);
   } catch (e) {
-    bot.sendMessage(chatId, STRING_ERROR, {parse_mode : "html"})
-    .catch((e) => logTelegramError(e));    
+    sendAndCatch(chatId, STRING_ERROR, TELEGRAM);
   }
-})
+});
 
 
 bot.onText(/\/btc/, async (msg, match) => {
@@ -102,7 +75,6 @@ bot.onText(/\/btc/, async (msg, match) => {
     sendAndCatch(chatId, STRING_ERROR + "\n" + e, TELEGRAM)
   }
 })
-
 
 
 function sendRequest(fiat) {
