@@ -9,23 +9,20 @@ From NPM:
 From Node's Standard Library:
 * **https**
 
-From your usual package manager:
-* **screen**
-
 
 ## How to use
 * clone this repo
-* `chmod +x config_and_run.sh`
-* `./config_and_run.sh YOUR_TELEGRAM_BOT_TOKEN`
+* `docker build -t monerobot .` (gonna push this to the Docker Hub soon)
+* `docker run -d -e TOKEN=YOUR_TELEGRAM_BOT_TOKEN monerobot`
+
 
 ### More info
-* Logs in `MoneroBot/monerobot.log`
-* `screen -r bot` is your friend :)
+* `docker container logs container_name` to check the logs
 * Thanks [Luca Toma](https://github.com/tomaluca95) for saving my life a few times
 
 
 ## Contacts, info, ...
-Write me at slg.lnz96@icloud.com or @LolloneS (Telegram).
+@LolloneS (Telegram).
 
 Donations are welcome:
 * BTC: `39x8wb7JcnzyjFojmx5p9SiY7jQfkWg6RU`

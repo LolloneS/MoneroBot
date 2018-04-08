@@ -8,8 +8,7 @@ const STRING_RESPONSE_HELP =
          + "Feel free to suggest me improvements and fixes @LolloneS. I'll try to get back to you as soon as I can.\n"
          + "<b>I know this isn't perfect</b>, I'm just an enthusiast trying to learn something :)\n";
 const STRING_ERROR = "I'm sorry, there was a problem with the APIs. Please try again later. If the problem persists, let me [@LolloneS] know."
-const cfg = require('./config.json');
-const token = cfg.token;
+const token = process.env.TOKEN;
 const bot = new TelegramBot(token, {polling: true, filepath: false});
 const winston = require('winston')
 
