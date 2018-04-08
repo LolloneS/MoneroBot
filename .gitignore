@@ -57,7 +57,3 @@ typings/
 # dotenv environment variables file
 .env
 
-package-lock.json
-config.json
-install_and_run.sh
-

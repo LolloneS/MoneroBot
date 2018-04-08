@@ -15,4 +15,4 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-CMD screen -mdS bot bash -c "node main.js &> monerobot.log"
+CMD ["node", "main.js"]
